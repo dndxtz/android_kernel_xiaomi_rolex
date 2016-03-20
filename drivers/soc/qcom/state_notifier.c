@@ -1,8 +1,7 @@
 /*
  * State Notifier Driver
  *
- * Copyright (c) 2013-2017, Pranav Vashi <neobuddy89@gmail.com>
- *           (c) 2017, Joe Maples <joe@frap129.org>
+ * Copyright (c) 2013-2016, Pranav Vashi <neobuddy89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,13 +13,14 @@
 #include <linux/module.h>
 #include <linux/state_notifier.h>
 
-#define DEFAULT_SUSPEND_DEFER_TIME 	1
+#define DEFAULT_SUSPEND_DEFER_TIME 	10
 #define STATE_NOTIFIER			"state_notifier"
 
 /*
  * debug = 1 will print all
  */
 static unsigned int debug;
+module_param_named(debug_mask, debug, uint, 0644);
 
 #define dprintk(msg...)		\
 do {				\
@@ -28,6 +28,8 @@ do {				\
 		pr_info(msg);	\
 } while (0)
 
+static bool enabled;
+module_param_named(enabled, enabled, bool, 0664);
 static unsigned int suspend_defer_time = DEFAULT_SUSPEND_DEFER_TIME;
 module_param_named(suspend_defer_time, suspend_defer_time, uint, 0664);
 static struct delayed_work suspend_work;
@@ -89,7 +91,7 @@ static void _resume_work(struct work_struct *work)
 void state_suspend(void)
 {
 	dprintk("%s: suspend called.\n", STATE_NOTIFIER);
-	if (state_suspended || suspend_in_progress)
+	if (state_suspended || suspend_in_progress || !enabled)
 		return;
 
 	suspend_in_progress = true;
@@ -105,13 +107,12 @@ void state_resume(void)
 	suspend_in_progress = false;
 
 	if (state_suspended)
-		queue_work(susp_wq, &resume_work);
+		queue_work_on(0, susp_wq, &resume_work);
 }
 
 static int __init state_notifier_init(void)
 {
-	susp_wq =
-	    alloc_workqueue("state_susp_wq", WQ_HIGHPRI, 0);
+	susp_wq = create_singlethread_workqueue("state_susp_wq");
 	if (!susp_wq)
 		pr_err("State Notifier failed to allocate suspend workqueue\n");
 
