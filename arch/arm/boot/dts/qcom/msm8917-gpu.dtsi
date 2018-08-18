@@ -54,7 +54,9 @@
 
 		qcom,initial-pwrlevel = <3>;
 
-		qcom,idle-timeout = <80>; //msecs
+		/* Enable gpu cooling device */
+		#cooling-cells = <2>;
+		qcom,idle-timeout = <64>; //msecs
 		qcom,deep-nap-timeout = <100>; //msecs
 		qcom,strtstp-sleepwake;
 		qcom,gpu-bimc-interface-clk-freq = <400000000>; //In Hz
