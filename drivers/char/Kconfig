@@ -658,5 +658,7 @@ config FRANDOM
 
 	  If unsure here, select N.
 
+source "drivers/char/srandom/Kconfig"
+
 endmenu
 
