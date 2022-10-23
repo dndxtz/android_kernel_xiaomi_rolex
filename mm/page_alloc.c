@@ -60,6 +60,7 @@
 #include <linux/page-debug-flags.h>
 #include <linux/hugetlb.h>
 #include <linux/sched/rt.h>
+#include <linux/devfreq_boost.h>
 
 #include <asm/sections.h>
 #include <asm/tlbflush.h>
@@ -2808,11 +2809,15 @@ restart:
 		classzone_idx = zonelist_zone_idx(preferred_zoneref);
 	}
 
+       /* Boost DDR bus when memory is low so allocation latency doesn't get too bad */
+	devfreq_boost_kick(DEVFREQ_MSM_CPUBW);
+
 rebalance:
 	/* This is the last chance, in general, before the goto nopage. */
 	page = get_page_from_freelist(gfp_mask, nodemask, order, zonelist,
 			high_zoneidx, alloc_flags & ~ALLOC_NO_WATERMARKS,
 			preferred_zone, classzone_idx, migratetype);
+
 	if (page)
 		goto got_pg;
 
