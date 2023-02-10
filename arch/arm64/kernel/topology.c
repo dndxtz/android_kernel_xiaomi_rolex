@@ -227,7 +227,7 @@ const struct sched_group_energy * const cpu_cluster_energy(int cpu)
 	struct sched_group_energy *sge = sge_array[cpu][SD_LEVEL1];
 
 	if (!sge) {
-		pr_warn("Invalid sched_group_energy for Cluster%d\n", cpu);
+		pr_debug("Invalid sched_group_energy for Cluster%d\n", cpu);
 		return NULL;
 	}
 
@@ -240,7 +240,7 @@ const struct sched_group_energy * const cpu_core_energy(int cpu)
 	struct sched_group_energy *sge = sge_array[cpu][SD_LEVEL0];
 
 	if (!sge) {
-		pr_warn("Invalid sched_group_energy for CPU%d\n", cpu);
+		pr_debug("Invalid sched_group_energy for CPU%d\n", cpu);
 		return NULL;
 	}
 
@@ -273,17 +273,20 @@ static struct sched_domain_topology_level arm64_topology[] = {
 
 static void update_cpu_capacity(unsigned int cpu)
 {
+	const struct sched_group_energy *sge = cpu_core_energy(cpu);
 	unsigned long capacity = SCHED_CAPACITY_SCALE;
 
-	if (cpu_core_energy(cpu)) {
-		int max_cap_idx = cpu_core_energy(cpu)->nr_cap_states - 1;
-		capacity = cpu_core_energy(cpu)->cap_states[max_cap_idx].cap;
+	if (sge) {
+		int max_cap_idx = sge->nr_cap_states - 1;
+
+		capacity = sge->cap_states[max_cap_idx].cap;
 	}
 
 	set_capacity_scale(cpu, capacity);
 
-	pr_info("CPU%d: update cpu_capacity %lu\n",
-		cpu, arch_scale_cpu_capacity(NULL, cpu));
+	if (sge)
+		pr_info("CPU%d: update cpu_capacity %lu\n",
+			cpu, arch_scale_cpu_capacity(NULL, cpu));
 }
 
 static void update_siblings_masks(unsigned int cpuid)
