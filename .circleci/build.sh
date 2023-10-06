@@ -5,7 +5,7 @@ git clone --depth=1 https://github.com/dndxtz/AnyKernel3 -b aosp AnyKernel
 echo "Done"
 tanggal=$(TZ=Asia/Jakarta date "+%Y%m%d-%H%M")
 ZIP_NAME="IdkSerKernel-Rolex-${tanggal}.zip"
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
+IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 chat_id=-1001944300223
@@ -58,7 +58,7 @@ function compile() {
         finerr
         exit 1
     fi
-    cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
+    cp out/arch/arm64/boot/Image.gz AnyKernel
 }
 # Zipping
 function zipping() {
