@@ -49,6 +49,7 @@
 			cpu-release-addr = <0x0 0x90000000>;
 			qcom,acc = <&acc0>;
 			qcom,limits-info = <&mitigation_profile0>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_1>;
 			L2_1: l2-cache {
 			      compatible = "arm,arch-cache";
@@ -75,6 +76,7 @@
 			cpu-release-addr = <0x0 0x90000000>;
 			qcom,acc = <&acc1>;
 			qcom,limits-info = <&mitigation_profile1>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_1>;
 			L1_I_101: l1-icache {
 				compatible = "arm,arch-cache";
@@ -94,6 +96,7 @@
 			cpu-release-addr = <0x0 0x90000000>;
 			qcom,acc = <&acc2>;
 			qcom,limits-info = <&mitigation_profile2>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_1>;
 			L1_I_102: l1-icache {
 				compatible = "arm,arch-cache";
@@ -113,6 +116,7 @@
 			cpu-release-addr = <0x0 0x90000000>;
 			qcom,acc = <&acc3>;
 			qcom,limits-info = <&mitigation_profile3>;
+			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_1>;
 			L1_I_103: l1-icache {
 				compatible = "arm,arch-cache";
@@ -124,6 +128,56 @@
 			};
 		};
 
+		energy_costs: energy-costs {
+			CPU_COST_0: core-cost0 {
+				busy-cost-data = <
+					 700000  623
+					1000000  917
+					1100000  1106
+					1250000  1432
+					1400000  1740
+				>;
+				idle-cost-data = <
+					100 80 60 40
+				>;
+			};
+			CPU_COST_1: core-cost1 {
+				busy-cost-data = <
+					 500000  70
+					 800000  114
+					 900000  141
+					1000000  178
+					1100000  213
+				>;
+				idle-cost-data = <
+					40 20 10 8
+				>;
+			};
+			CLUSTER_COST_0: cluster-cost0 {
+				busy-cost-data = <
+					 700000  85
+					1000000  126
+					1100000  152
+					1250000  197
+					1400000  239
+				>;
+				idle-cost-data = <
+					4 3 2 1
+				>;
+			};
+			CLUSTER_COST_1: cluster-cost1 {
+				busy-cost-data = <
+					 500000  19
+					 800000  29
+					 900000  36
+					1000000  46
+					1100000  55
+				>;
+				idle-cost-data = <
+					4 3 2 1
+				>;
+			};
+		};
 	};
 };
 
