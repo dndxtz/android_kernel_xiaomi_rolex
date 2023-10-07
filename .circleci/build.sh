@@ -4,7 +4,7 @@ git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
 git clone --depth=1 https://github.com/dndxtz/AnyKernel3 -b aosp AnyKernel
 echo "Done"
 tanggal=$(TZ=Asia/Jakarta date "+%Y%m%d-%H%M")
-ZIP_NAME="IdkSerKernel-Rolex-${tanggal}.zip"
+ZIP_NAME="IdkSerKernel-EAS-Rolex-${tanggal}.zip"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
