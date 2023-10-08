@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-mirror --depth=1 gcc
-git clone --depth=1 https://github.com/dndxtz/AnyKernel3 AnyKernel
+git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-32-mirror --depth=1 gcc32
+git clone --depth=1 https://github.com/dndxtz/AnyKernel3 -b aosp AnyKernel
 echo "Done"
 tanggal=$(TZ=Asia/Jakarta date "+%Y%m%d-%H%M")
 ZIP_NAME="FateXNeesanKernel-HMP-Rolex-${tanggal}.zip"
@@ -10,6 +11,7 @@ TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 chat_id=-1001944300223
 export PATH="${PATH}:$(pwd)/gcc/bin"
+export PATH="${PATH}:$(pwd)/gcc32/bin"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=DESKTOP-9ODEROB
 export KBUILD_BUILD_USER=dndxtz
@@ -48,7 +50,7 @@ function finerr() {
 # Compile plox
 function compile() {
     make O=out ARCH=arm64 rolex_defconfig
-    make -C $(pwd) CROSS_COMPILE=aarch64-linux-android- O=out -j8
+    make -C $(pwd) CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- O=out -j8
 
     if ! [ -a "$IMAGE" ]; then
         finerr
