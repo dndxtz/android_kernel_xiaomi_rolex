@@ -4,15 +4,15 @@ git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-mirror --dep
 git clone --depth=1 https://github.com/dndxtz/AnyKernel3 AnyKernel
 echo "Done"
 tanggal=$(TZ=Asia/Jakarta date "+%Y%m%d-%H%M")
-ZIP_NAME="IdkSerKernel-Rolex-${tanggal}.zip"
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
+ZIP_NAME="FateXNeesanKernel-HMP-Rolex-${tanggal}.zip"
+IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 chat_id=-1001944300223
 export PATH="${PATH}:$(pwd)/gcc/bin"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=nekonime
-export KBUILD_BUILD_USER=idkser
+export KBUILD_BUILD_HOST=DESKTOP-9ODEROB
+export KBUILD_BUILD_USER=dndxtz
 # sticker plox
 function sticker() {
     curl -s -X POST "https://api.telegram.org/bot728234533:AAHgxu6Y_PsExZNJoYiDgC74K_J-Ok0OaUk/sendSticker" \
@@ -54,7 +54,7 @@ function compile() {
         finerr
         exit 1
     fi
-    cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
+    cp out/arch/arm64/boot/Image.gz AnyKernel
 }
 # Zipping
 function zipping() {
