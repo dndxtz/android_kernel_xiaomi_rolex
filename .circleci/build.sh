@@ -5,7 +5,7 @@ git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-32-mirror --
 git clone --depth=1 https://github.com/dndxtz/AnyKernel3 -b aosp AnyKernel
 echo "Done"
 tanggal=$(TZ=Asia/Jakarta date "+%Y%m%d-%H%M")
-ZIP_NAME="FateXNeesanKernel-HMP-Rolex-${tanggal}.zip"
+ZIP_NAME="シャドウガーデン-HMP-Rolex-${tanggal}.zip"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
@@ -14,7 +14,7 @@ export PATH="${PATH}:$(pwd)/gcc/bin"
 export PATH="${PATH}:$(pwd)/gcc32/bin"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=DESKTOP-9ODEROB
-export KBUILD_BUILD_USER=dndxtz
+export KBUILD_BUILD_USER=シド・カゲ
 # sticker plox
 function sticker() {
     curl -s -X POST "https://api.telegram.org/bot728234533:AAHgxu6Y_PsExZNJoYiDgC74K_J-Ok0OaUk/sendSticker" \
